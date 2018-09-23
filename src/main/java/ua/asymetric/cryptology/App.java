@@ -23,5 +23,8 @@ public class App
         RandomGenerator generator4 = new GeffeGenerator();
         System.out.println(generator4.generate());
 
+        RandomGenerator generator5 = new WolframGenerator();
+        System.out.println(generator5.generate());
+
     }
 }
