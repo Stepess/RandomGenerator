@@ -26,5 +26,8 @@ public class App
         RandomGenerator generator5 = new WolframGenerator();
         System.out.println(generator5.generate());
 
+        RandomGenerator generator6 = new BMGenerator();
+        System.out.println(generator6.generate());
+
     }
 }
