@@ -12,11 +12,7 @@ public class LibrarianGenerator implements RandomGenerator {
 
     public LibrarianGenerator() {
         source = new File(TEXT_PATH);
-        try {
-            stream = new FileInputStream(source);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        updateState();
     }
 
     public InputStream getStream() {
@@ -25,7 +21,11 @@ public class LibrarianGenerator implements RandomGenerator {
 
     @Override
     public void updateState() {
-
+        try {
+            stream = new FileInputStream(source);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -39,9 +39,9 @@ public class LibrarianGenerator implements RandomGenerator {
         }
 
         if (res == -1) {
-             try {
+            try {
                 stream.close();
-                stream = new FileInputStream(source);
+                updateState();
                 res = stream.read();
             } catch (IOException e) {
                 e.printStackTrace();
