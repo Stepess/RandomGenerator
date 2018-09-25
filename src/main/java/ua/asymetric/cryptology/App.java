@@ -2,6 +2,7 @@ package ua.asymetric.cryptology;
 
 import ua.asymetric.cryptology.random.*;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class App 
@@ -28,6 +29,16 @@ public class App
 
         RandomGenerator generator6 = new BMGenerator();
         System.out.println(generator6.generate());
+
+        RandomGenerator generator7 = new LibrarianGenerator();
+        for (int i=0;i<100;i++) {
+            System.out.println(generator7.generate());
+        }
+        try {
+            ((LibrarianGenerator) generator7).getStream().close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }
