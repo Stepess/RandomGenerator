@@ -31,14 +31,15 @@ public class App
         System.out.println(generator6.generate());
 
         RandomGenerator generator7 = new LibrarianGenerator();
-        for (int i=0;i<100;i++) {
-            System.out.println(generator7.generate());
-        }
+        System.out.println(generator7.generate());
+
         try {
             ((LibrarianGenerator) generator7).getStream().close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        RandomGenerator generator8 = new BBSGenerator();
+        System.out.println(generator8.generate());
     }
 }
