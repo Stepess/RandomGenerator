@@ -19,6 +19,11 @@ public class WolframGenerator implements RandomGenerator {
         return result;
     }
 
+    @Override
+    public byte generateRandomByte() {
+        return (byte) generate();
+    }
+
     private int circularLeftShift(int value, int step) {
         return (value << step) | (value >>> (Integer.SIZE - step));
     }

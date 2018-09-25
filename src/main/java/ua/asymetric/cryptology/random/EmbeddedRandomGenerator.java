@@ -17,4 +17,9 @@ public class EmbeddedRandomGenerator implements RandomGenerator {
     public int generate() {
         return random.nextInt();
     }
+
+    @Override
+    public byte generateRandomByte() {
+        return (byte) generate();
+    }
 }

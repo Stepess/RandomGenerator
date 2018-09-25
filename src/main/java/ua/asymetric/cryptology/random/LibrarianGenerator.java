@@ -50,4 +50,9 @@ public class LibrarianGenerator implements RandomGenerator {
 
         return res;
     }
+
+    @Override
+    public byte generateRandomByte() {
+        return (byte) generate();
+    }
 }

@@ -5,4 +5,9 @@ public class LahmerLowGenerator extends LahmerGenerator implements RandomGenerat
     public int generate() {
         return (int) super.generateIntermediateValue() & 0xFF;
     }
+
+    @Override
+    public byte generateRandomByte() {
+        return (byte) generate();
+    }
 }

@@ -15,7 +15,7 @@ public abstract class LahmerGenerator implements RandomGenerator {
         this.seed = System.nanoTime();
     }
 
-    protected long generateIntermediateValue(){
+    protected long generateIntermediateValue() {
         long previous = seed;
         long current = 0;
         for (int i = 0; i < 32; i++) {

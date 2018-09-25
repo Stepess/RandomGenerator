@@ -15,12 +15,23 @@ public class BBSGenerator implements RandomGenerator {
 
     @Override
     public void updateState() {
-        seed =BigInteger.valueOf(System.nanoTime() + 2);
+        seed = BigInteger.valueOf(System.nanoTime() + 2);
     }
 
     @Override
     public int generate() {
         seed = seed.modPow(BigInteger.valueOf(2), n);
         return seed.mod(BigInteger.valueOf(2)).intValue();
+    }
+
+    @Override
+    public byte generateRandomByte() {
+        byte result = 0;
+        for (int i = 0; i < Byte.SIZE - 1; i++) {
+            result |= generate();
+            result <<= 1;
+        }
+        result |= generate();
+        return result;
     }
 }

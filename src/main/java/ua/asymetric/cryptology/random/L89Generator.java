@@ -12,4 +12,15 @@ public class L89Generator extends LGenerator implements RandomGenerator {
         super(new LSR(PERIOD, RECURRENCE));
         super.updateState();
     }
+
+    @Override
+    public byte generateRandomByte() {
+        byte result = 0;
+        for (int i = 0; i < Byte.SIZE - 1; i++) {
+            result |= generate();
+            result <<= 1;
+        }
+        result |= generate();
+        return result;
+    }
 }

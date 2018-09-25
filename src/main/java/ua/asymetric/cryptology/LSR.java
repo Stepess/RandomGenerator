@@ -10,10 +10,10 @@ public class LSR {
     public LSR(int period, int[] recurrence) {
         this.period = period;
         condition = new int[period];
-        this.recurrence = Arrays.copyOf(recurrence , recurrence.length);
+        this.recurrence = Arrays.copyOf(recurrence, recurrence.length);
     }
 
-    public void setCondition(int[] arr){
+    public void setCondition(int[] arr) {
         if (period >= 0) System.arraycopy(arr, 0, condition, 0, period);
     }
 
@@ -24,11 +24,11 @@ public class LSR {
         }
     }
 
-    public void setRecurrence(int[] arr){
+    public void setRecurrence(int[] arr) {
         if (period >= 0) System.arraycopy(arr, 0, recurrence, 0, period);
     }
 
-    public int getPeriod(){
+    public int getPeriod() {
         return period;
     }
 
@@ -40,15 +40,15 @@ public class LSR {
         return recurrence;
     }
 
-    public int tact(){
+    public int tact() {
         int res = condition[0];
-        int el=0;
-        for(int i=0;i<period;i++)
-            el += condition[i]&recurrence[i];
+        int el = 0;
+        for (int i = 0; i < period; i++)
+            el += condition[i] & recurrence[i];
         el = el % 2;
-        for(int i=0;i<period-1;i++)
-            condition[i] = condition[i+1];
-        condition[period-1] = el;
+        for (int i = 0; i < period - 1; i++)
+            condition[i] = condition[i + 1];
+        condition[period - 1] = el;
         return res;
     }
 }

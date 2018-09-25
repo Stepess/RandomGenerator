@@ -9,7 +9,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        RandomGenerator generator = new LahmerLowGenerator();
+        /*RandomGenerator generator = new LahmerLowGenerator();
         System.out.println(Integer.toBinaryString(generator.generate()));
 
         RandomGenerator generator1 = new LahmerHighGenerator();
@@ -37,9 +37,11 @@ public class App
             ((LibrarianGenerator) generator7).getStream().close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         RandomGenerator generator8 = new BBSGenerator();
-        System.out.println(generator8.generate());
+        //System.out.println(generator8.generate());
+
+        System.out.println(String.format("%8s", Integer.toBinaryString(generator8.generateRandomByte() & 0xFF)).replace(' ', '0'));
     }
 }
