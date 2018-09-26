@@ -1,12 +1,19 @@
 package ua.asymetric.cryptology;
 
 import ua.asymetric.cryptology.random.*;
+import ua.asymetric.cryptology.test.EquiprobableSignsCriterion;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 public class App 
 {
+
+    private static final double QUANTILE_LEVEL_0_01 = 2.35;
+    private static final double QUANTILE_LEVEL_0_05 = 1.65;
+    private static final double QUANTILE_LEVEL_0_1 = 1.3;
+
+
     public static void main( String[] args )
     {
         /*RandomGenerator generator = new LahmerLowGenerator();
@@ -42,6 +49,24 @@ public class App
         RandomGenerator generator8 = new BBSGenerator();
         //System.out.println(generator8.generate());
 
-        System.out.println(String.format("%8s", Integer.toBinaryString(generator8.generateRandomByte() & 0xFF)).replace(' ', '0'));
+        //System.out.println(String.format("%8s", Integer.toBinaryString(generator8.generateRandomByte() & 0xFF)).replace(' ', '0'));
+
+        /*byte[] randomSequence = new byte[NUM_OF_BYTES];
+        int[] statistic = new int[NUM_OF_DIFFERENT_BYTES];
+        for (int i=0; i<NUM_OF_BYTES; i++) {
+            randomSequence[i] = generator8.generateRandomByte();
+            statistic[randomSequence[i]+128]++;
+        }*/
+
+
+        EquiprobableSignsCriterion BBSTest = new EquiprobableSignsCriterion(generator8);
+
+        BBSTest.generateRandomSequence();
+        BBSTest.countStatisticData();
+        BBSTest.calculateHiSqr();
+
+        System.out.println("Level 0.01 - " + BBSTest.test(QUANTILE_LEVEL_0_01));
+        System.out.println("Level 0.05 - " + BBSTest.test(QUANTILE_LEVEL_0_05));
+        System.out.println("Level 0.1 - " + BBSTest.test(QUANTILE_LEVEL_0_1));
     }
 }
