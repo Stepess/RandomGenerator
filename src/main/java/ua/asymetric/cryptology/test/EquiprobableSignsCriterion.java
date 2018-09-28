@@ -40,6 +40,11 @@ public class EquiprobableSignsCriterion {
 
     public boolean test(double quantile) {
         double threshold = Math.sqrt(2*(NUM_OF_DIFFERENT_BYTES-1))*quantile + NUM_OF_DIFFERENT_BYTES-1;
+        System.out.println("Test threashold - " + threshold);
         return (hiSqr - threshold)<0;
+    }
+
+    public double getHiSqr() {
+        return hiSqr;
     }
 }

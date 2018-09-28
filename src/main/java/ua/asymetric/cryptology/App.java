@@ -2,16 +2,16 @@ package ua.asymetric.cryptology;
 
 import ua.asymetric.cryptology.random.*;
 import ua.asymetric.cryptology.test.EquiprobableSignsCriterion;
+import ua.asymetric.cryptology.util.TestUtil;
 
 import java.io.IOException;
 import java.util.Arrays;
 
-public class App 
+public class
+App
 {
 
-    private static final double QUANTILE_LEVEL_0_01 = 2.35;
-    private static final double QUANTILE_LEVEL_0_05 = 1.65;
-    private static final double QUANTILE_LEVEL_0_1 = 1.3;
+
 
 
     public static void main( String[] args )
@@ -46,7 +46,7 @@ public class App
             e.printStackTrace();
         }*/
 
-        RandomGenerator generator8 = new BBSGenerator();
+
         //System.out.println(generator8.generate());
 
         //System.out.println(String.format("%8s", Integer.toBinaryString(generator8.generateRandomByte() & 0xFF)).replace(' ', '0'));
@@ -59,14 +59,38 @@ public class App
         }*/
 
 
-        EquiprobableSignsCriterion BBSTest = new EquiprobableSignsCriterion(generator8);
 
-        BBSTest.generateRandomSequence();
-        BBSTest.countStatisticData();
-        BBSTest.calculateHiSqr();
+        RandomGenerator LahmerLowGenerator = new LahmerLowGenerator();
+        TestUtil.testEqiprobableSignsCriteria(LahmerLowGenerator, "LAHMER LOW EQIPROBABLE SIGNS TEST");
 
-        System.out.println("Level 0.01 - " + BBSTest.test(QUANTILE_LEVEL_0_01));
-        System.out.println("Level 0.05 - " + BBSTest.test(QUANTILE_LEVEL_0_05));
-        System.out.println("Level 0.1 - " + BBSTest.test(QUANTILE_LEVEL_0_1));
+        RandomGenerator LahmerHighGenerator = new LahmerHighGenerator();
+        TestUtil.testEqiprobableSignsCriteria(LahmerHighGenerator, "LAHMER HIGH EQIPROBABLE SIGNS TEST");
+
+        RandomGenerator L20Generator = new L20Generator();
+        TestUtil.testEqiprobableSignsCriteria(L20Generator, "L20 EQIPROBABLE SIGNS TEST");
+
+        RandomGenerator L89Generator = new L89Generator();
+        TestUtil.testEqiprobableSignsCriteria(L89Generator, "L89 EQIPROBABLE SIGNS TEST");
+
+        RandomGenerator GeffeGenerator = new GeffeGenerator();
+        TestUtil.testEqiprobableSignsCriteria(GeffeGenerator, "GEFFE EQIPROBABLE SIGNS TEST");
+
+        RandomGenerator WolframGenerator = new WolframGenerator();
+        TestUtil.testEqiprobableSignsCriteria(WolframGenerator, "WOLFRAM EQIPROBABLE SIGNS TEST");
+
+        RandomGenerator BMGenerator = new BMGenerator();
+        TestUtil.testEqiprobableSignsCriteria(BMGenerator, "BM EQIPROBABLE SIGNS TEST");
+
+        RandomGenerator LibrarianGenerator = new LibrarianGenerator();
+        TestUtil.testEqiprobableSignsCriteria(LibrarianGenerator, "Librarian EQIPROBABLE SIGNS TEST");
+
+        RandomGenerator BBSGenerator = new BBSGenerator();
+        TestUtil.testEqiprobableSignsCriteria(BBSGenerator, "BBS EQIPROBABLE SIGNS TEST");
+
     }
+
+
+
 }
+
+
