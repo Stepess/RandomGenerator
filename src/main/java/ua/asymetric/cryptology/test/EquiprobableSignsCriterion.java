@@ -2,6 +2,8 @@ package ua.asymetric.cryptology.test;
 
 import ua.asymetric.cryptology.random.RandomGenerator;
 
+import java.util.Arrays;
+
 public class EquiprobableSignsCriterion {
 
     private static final int NUM_OF_BYTES = 262_144;

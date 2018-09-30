@@ -16,14 +16,8 @@ public abstract class LahmerGenerator implements RandomGenerator {
     }
 
     protected long generateIntermediateValue() {
-        long previous = seed;
-        long current = 0;
-        for (int i = 0; i < 32; i++) {
-            current = (a * previous + c) % m;
-            previous = current;
-        }
-        seed = current;
-        return current;
+        seed = (a * seed + c) % m;
+        return seed;
     }
 
     public long getSeed() {
