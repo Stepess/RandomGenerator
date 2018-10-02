@@ -3,6 +3,7 @@ package ua.asymetric.cryptology.random;
 import java.math.BigInteger;
 
 public class BBSGenerator implements RandomGenerator {
+    private static final String GENERATOR_NAME = "BBS";
     private static final BigInteger P = new BigInteger("D5BBB96D30086EC484EBA3D7F9CAEB07", 16);
     private static final BigInteger Q = new BigInteger("425D2B9BFDB25B9CF6C416CC6E37B59C1F", 16);
     private BigInteger n;
@@ -33,5 +34,10 @@ public class BBSGenerator implements RandomGenerator {
         }
         result |= generate();
         return result;
+    }
+
+    @Override
+    public String getGeneratorName() {
+        return GENERATOR_NAME;
     }
 }

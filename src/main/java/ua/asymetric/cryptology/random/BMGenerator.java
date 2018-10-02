@@ -4,8 +4,12 @@ import java.math.BigInteger;
 import java.util.Random;
 
 public class BMGenerator implements RandomGenerator {
+    @Override
+    public String getGeneratorName() {
+        return GENERATOR_NAME;
+    }
 
-
+    private static final String GENERATOR_NAME = "BM";
     private static final String P_VALUE = "CEA42B987C44FA642D80AD9F51F10457690DEF10C83D0BC1BCEE12FC3B6093E3";
     private static final BigInteger P =
             new BigInteger(P_VALUE, 16);

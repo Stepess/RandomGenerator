@@ -6,4 +6,6 @@ public interface RandomGenerator {
     int generate();
 
     byte generateRandomByte();
+
+    String getGeneratorName();
 }

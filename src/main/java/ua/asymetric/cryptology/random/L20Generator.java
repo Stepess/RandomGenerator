@@ -3,6 +3,12 @@ package ua.asymetric.cryptology.random;
 import ua.asymetric.cryptology.LSR;
 
 public class L20Generator extends LGenerator implements RandomGenerator {
+    @Override
+    public String getGeneratorName() {
+        return GENERATOR_NAME;
+    }
+
+    private static final String GENERATOR_NAME = "L20";
     private final static int PERIOD = 20;
     private final static int[] RECURRENCE = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0};
 

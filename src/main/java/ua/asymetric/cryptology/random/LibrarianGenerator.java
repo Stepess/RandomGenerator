@@ -4,9 +4,14 @@ package ua.asymetric.cryptology.random;
 import java.io.*;
 
 public class LibrarianGenerator implements RandomGenerator {
+    @Override
+    public String getGeneratorName() {
+        return GENERATOR_NAME;
+    }
 
+    private static final String GENERATOR_NAME = "Librarian";
     private static final String TEXT_PATH =
-            "D:\\Programming\\AsymCrypt\\RandomGenerator\\src\\main\\resource\\text.txt";
+            "src\\main\\resource\\lotr.txt";
     private InputStream stream;
     private File source;
 

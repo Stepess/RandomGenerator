@@ -40,13 +40,27 @@ public class EquiprobableSignsCriterion {
         }
     }
 
+    public double calculateThresholdValue(double quantile) {
+        return Math.sqrt(2*(NUM_OF_DIFFERENT_BYTES-1))*quantile + NUM_OF_DIFFERENT_BYTES-1;
+    }
+
     public boolean test(double quantile) {
-        double threshold = Math.sqrt(2*(NUM_OF_DIFFERENT_BYTES-1))*quantile + NUM_OF_DIFFERENT_BYTES-1;
-        System.out.println("Test threashold - " + threshold);
+        double threshold = calculateThresholdValue(quantile);
+        //System.out.println(Arrays.toString(randomSequence));
+        //System.out.println(Arrays.toString(statisticData));
+        //System.out.println("Test threashold - " + threshold);
         return (hiSqr - threshold)<0;
     }
 
     public double getHiSqr() {
         return hiSqr;
+    }
+
+    public int[] getStatisticData() {
+        return statisticData;
+    }
+
+    public byte[] getRandomSequence() {
+        return randomSequence;
     }
 }
