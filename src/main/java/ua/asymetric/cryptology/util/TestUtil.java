@@ -1,5 +1,6 @@
 package ua.asymetric.cryptology.util;
 
+import org.apache.commons.lang3.StringUtils;
 import ua.asymetric.cryptology.random.RandomGenerator;
 import ua.asymetric.cryptology.test.EquiprobableSignsCriterion;
 
@@ -62,9 +63,25 @@ public class TestUtil {
     }
 
     public static void printResults() {
-        for (String name: thresholds.keySet()) {
-            System.out.printf ("%-30s", name);
+        double[] criterionPowers = {0.01, 0.05, 0.1};
+        System.out.println();
+        System.out.println(StringUtils.leftPad("EqiProbableSignsCriteria", 70));
+        for (int i=0; i<3; i++) {
+            System.out.print(StringUtils.leftPad(String.valueOf(criterionPowers[i]), 30));
         }
+        System.out.println();
+        for (String name: thresholds.keySet()) {
+            System.out.printf("|%10s", name);
+            for (int i=0; i<3; i++) {
+                System.out.printf("|%5s (%-10.2f , %-10.2f)", StringUtils.leftPad(String.valueOf(testResults.get(name)[i]), 5),
+                        thresholds.get(name)[i], chiSquares.get(name));
+
+            }
+            System.out.println();
+            //System.out.printf ("%-30s", StringUtils.leftPad(name, 30));
+        }
+
+
     }
 
 }

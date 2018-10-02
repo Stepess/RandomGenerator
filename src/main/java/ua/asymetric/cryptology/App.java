@@ -91,15 +91,24 @@ App
 */
 
 
+        int numOfGens = 10;
+        RandomGenerator[] generators = new RandomGenerator[numOfGens];
+        //generators[0] = new BBSGenerator();
+        generators[0] = new GeffeGenerator();
+        //generators[1] = new BMGenerator();
+        generators[1] = new GeffeGenerator();
+        generators[2] = new EmbeddedRandomGenerator();
+        generators[3] = new GeffeGenerator();
+        generators[4] = new L20Generator();
+        generators[5] = new L89Generator();
+        generators[6] = new LahmerHighGenerator();
+        generators[7] = new LahmerLowGenerator();
+        generators[8] = new LibrarianGenerator();
+        generators[9] = new WolframGenerator();
 
-
-
-
-        RandomGenerator GeffeGenerator = new GeffeGenerator();
-        TestUtil.testEqiprobableSignsCriteriaForRandomGenerator(GeffeGenerator);
-
-        RandomGenerator L20Generator = new L20Generator();
-        TestUtil.testEqiprobableSignsCriteriaForRandomGenerator(L20Generator);
+        for (RandomGenerator generator : generators) {
+            TestUtil.testEqiprobableSignsCriteriaForRandomGenerator(generator);
+        }
 
         TestUtil.printResults();
 
