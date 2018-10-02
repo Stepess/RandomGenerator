@@ -36,7 +36,7 @@ public class EquiprobableSignsCriterion {
 
     public void calculateHiSqr() {
         for (int i=0; i<NUM_OF_DIFFERENT_BYTES; i++) {
-            hiSqr += Math.pow(statisticData[i] - expectedNumberOfByte, 2)/expectedNumberOfByte;
+            hiSqr += Math.pow(statisticData[i] - expectedNumberOfByte, 2)*1.0/expectedNumberOfByte;
         }
     }
 

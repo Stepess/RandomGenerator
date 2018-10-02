@@ -1,13 +1,8 @@
 package ua.asymetric.cryptology;
 
 import ua.asymetric.cryptology.random.*;
-import ua.asymetric.cryptology.test.EquiprobableSignsCriterion;
+import ua.asymetric.cryptology.test.IndependenceSignsCriterion;
 import ua.asymetric.cryptology.util.TestUtil;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class
 App
@@ -91,7 +86,7 @@ App
 */
 
 
-        int numOfGens = 10;
+        /*int numOfGens = 10;
         RandomGenerator[] generators = new RandomGenerator[numOfGens];
         //generators[0] = new BBSGenerator();
         generators[0] = new GeffeGenerator();
@@ -110,7 +105,14 @@ App
             TestUtil.testEqiprobableSignsCriteriaForRandomGenerator(generator);
         }
 
+        TestUtil.printResults();*/
+
+        RandomGenerator generator = new GeffeGenerator();
+
+        TestUtil.testIndependenceSignsCriteriaForRandomGenerator(generator);
+
         TestUtil.printResults();
+
 
 
 

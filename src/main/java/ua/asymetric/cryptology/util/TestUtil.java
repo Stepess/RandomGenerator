@@ -3,6 +3,7 @@ package ua.asymetric.cryptology.util;
 import org.apache.commons.lang3.StringUtils;
 import ua.asymetric.cryptology.random.RandomGenerator;
 import ua.asymetric.cryptology.test.EquiprobableSignsCriterion;
+import ua.asymetric.cryptology.test.IndependenceSignsCriterion;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +42,32 @@ public class TestUtil {
     }
 
    // public static void testEqiprobableSignsCriteriaForRandomGenerator(RandomGenerator generator, Map<String, double[]> thresholds, Map<String, Double> chiSquares, Map<String, boolean[]> testResults) {
-     public static void testEqiprobableSignsCriteriaForRandomGenerator(RandomGenerator generator) {
+     public static void testIndependenceSignsCriteriaForRandomGenerator(RandomGenerator generator) {
+        IndependenceSignsCriterion criterion = new IndependenceSignsCriterion(generator);
+        criterion.generateRandomSequence();
+        criterion.countStatisticData();
+        criterion.calculateChiSqr();
+
+        double[] thresholdsValues = new double[3];
+
+        thresholdsValues[0] = criterion.calculateThresholdValue(QUANTILE_LEVEL_0_01);
+        thresholdsValues[1] = criterion.calculateThresholdValue(QUANTILE_LEVEL_0_05);
+        thresholdsValues[2] = criterion.calculateThresholdValue(QUANTILE_LEVEL_0_1);
+
+        thresholds.put(generator.getGeneratorName(), thresholdsValues);
+
+        chiSquares.put(generator.getGeneratorName(), criterion.getChiSqr());
+
+        boolean[] resultsValues = new boolean[3];
+
+        resultsValues[0] = criterion.test(QUANTILE_LEVEL_0_01);
+        resultsValues[1] = criterion.test(QUANTILE_LEVEL_0_05);
+        resultsValues[2] = criterion.test(QUANTILE_LEVEL_0_1);
+
+        testResults.put(generator.getGeneratorName(), resultsValues);
+    }
+
+    public static void testEqiprobableSignsCriteriaForRandomGenerator(RandomGenerator generator) {
         EquiprobableSignsCriterion criterion = new EquiprobableSignsCriterion(generator);
         criterion.generateRandomSequence();
         criterion.countStatisticData();
