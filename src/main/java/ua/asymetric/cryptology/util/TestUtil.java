@@ -9,6 +9,10 @@ import java.util.Map;
 
 public class TestUtil {
 
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
+
     private static final double QUANTILE_LEVEL_0_01 = 2.35;
     private static final double QUANTILE_LEVEL_0_05 = 1.65;
     private static final double QUANTILE_LEVEL_0_1 = 1.3;
@@ -67,13 +71,14 @@ public class TestUtil {
         System.out.println();
         System.out.println(StringUtils.leftPad("EqiProbableSignsCriteria", 70));
         for (int i=0; i<3; i++) {
-            System.out.print(StringUtils.leftPad(String.valueOf(criterionPowers[i]), 30));
+            System.out.print(StringUtils.leftPad(String.valueOf(criterionPowers[i]), 35));
         }
         System.out.println();
         for (String name: thresholds.keySet()) {
-            System.out.printf("|%10s", name);
-            for (int i=0; i<3; i++) {
-                System.out.printf("|%5s (%-10.2f , %-10.2f)", StringUtils.leftPad(String.valueOf(testResults.get(name)[i]), 5),
+            System.out.printf("|%10s", name);// StringUtils.leftPad(String.valueOf(testResults.get(name)[i]), 5)
+            for (int i=0; i<3; i++) {//StringUtils.leftPad(ANSI_GREEN + String.valueOf(testResults.get(name)[i] + ANSI_RESET), 5)
+                String color = testResults.get(name)[i]?ANSI_GREEN:ANSI_RED;
+                System.out.printf("|%5s\t(%-12.2f , %-12.2f)",StringUtils.leftPad( color + String.valueOf(testResults.get(name)[i] + ANSI_RESET ), 5),
                         thresholds.get(name)[i], chiSquares.get(name));
 
             }
