@@ -41,21 +41,20 @@ App
             ((LibrarianGenerator) generator7).getStream().close();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
-
+        }
 
         //System.out.println(generator8.generate());
 
         //System.out.println(String.format("%8s", Integer.toBinaryString(generator8.generateRandomByte() & 0xFF)).replace(' ', '0'));
 
-        /*byte[] randomSequence = new byte[NUM_OF_BYTES];
+        byte[] randomSequence = new byte[NUM_OF_BYTES];
         int[] statistic = new int[NUM_OF_DIFFERENT_BYTES];
         for (int i=0; i<NUM_OF_BYTES; i++) {
             randomSequence[i] = generator8.generateRandomByte();
             statistic[randomSequence[i]+128]++;
-        }*/
+        }
 
-
+*/
 
         /*RandomGenerator LahmerLowGenerator = new LahmerLowGenerator();
         TestUtil.testEqiprobableSignsCriteria(LahmerLowGenerator, "LAHMER LOW EQIPROBABLE SIGNS TEST");
@@ -85,8 +84,7 @@ App
         TestUtil.testEqiprobableSignsCriteria(BBSGenerator, "BBS EQIPROBABLE SIGNS TEST");*//*
 */
 
-
-        /*int numOfGens = 10;
+        int numOfGens = 10;
         RandomGenerator[] generators = new RandomGenerator[numOfGens];
         //generators[0] = new BBSGenerator();
         generators[0] = new GeffeGenerator();
@@ -104,15 +102,20 @@ App
         for (RandomGenerator generator : generators) {
             TestUtil.testEqiprobableSignsCriteriaForRandomGenerator(generator);
         }
+        TestUtil.printResults();
 
-        TestUtil.printResults();*/
 
-        RandomGenerator generator = new GeffeGenerator();
-
-        TestUtil.testIndependenceSignsCriteriaForRandomGenerator(generator);
+        for (RandomGenerator generator : generators) {
+            TestUtil.testIndependenceSignsCriteriaForRandomGenerator(generator);
+        }
 
         TestUtil.printResults();
 
+        /*RandomGenerator generator = new LahmerLowGenerator();
+
+        TestUtil.testIndependenceSignsCriteriaForRandomGenerator(generator);
+
+        TestUtil.printResults();*/
 
 
 

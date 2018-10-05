@@ -2,6 +2,11 @@ package ua.asymetric.cryptology.test;
 
 import ua.asymetric.cryptology.random.RandomGenerator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.stream.Stream;
+
 public class IndependenceSignsCriterion {
 
     private static final int NUM_OF_BYTES = 262_144;
@@ -46,10 +51,15 @@ public class IndependenceSignsCriterion {
     public void calculateChiSqr() {
         for (int i = 0; i < NUM_OF_DIFFERENT_BYTES; i++) {
             for (int j = 0; j < NUM_OF_DIFFERENT_BYTES; j++) {
-                chiSqr = statisticData[i][j]*statisticData[i][j]*1.0/(sumLine(statisticData, i) +  sumColumn(statisticData, j)) - 1;
+                int denominator = sumLine(statisticData, i) *  sumColumn(statisticData, j);
+                if (denominator!=0) {
+                    chiSqr += statisticData[i][j]*statisticData[i][j]*1.0/(denominator);
+                }
             }
         }
+        chiSqr--;
         chiSqr *= NUM_OF_BYTES/2;
+
     }
 
     private int sumLine(int[][] array, int lineIndex) {
@@ -83,5 +93,21 @@ public class IndependenceSignsCriterion {
 
     public double getChiSqr() {
         return chiSqr;
+    }
+
+    public void printStatisticData() {
+        for (int i=0; i<NUM_OF_DIFFERENT_BYTES; i++) {
+            for (int j=0; j<NUM_OF_DIFFERENT_BYTES; j++) {
+                System.out.print(statisticData[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void printRandomSequence() {
+        /*Stream.of(randomSequence).forEach(System.out::println);*/
+        for (int i=0; i<NUM_OF_BYTES; i++) {
+            System.out.println(randomSequence[i]);
+        }
     }
 }
