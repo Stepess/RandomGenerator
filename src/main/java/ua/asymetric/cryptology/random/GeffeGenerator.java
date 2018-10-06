@@ -3,11 +3,6 @@ package ua.asymetric.cryptology.random;
 import ua.asymetric.cryptology.LSR;
 
 public class GeffeGenerator extends RandomGenerator {
-    @Override
-    public String getGeneratorName() {
-        return GENERATOR_NAME;
-    }
-
     private static final String GENERATOR_NAME = "Geffe";
     private LSR L11;
     private LSR L9;
@@ -50,5 +45,10 @@ public class GeffeGenerator extends RandomGenerator {
         }
         result |= generate();
         return result;
+    }
+
+    @Override
+    public String getGeneratorName() {
+        return GENERATOR_NAME;
     }
 }

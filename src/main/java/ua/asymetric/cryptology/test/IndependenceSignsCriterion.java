@@ -73,16 +73,12 @@ public class IndependenceSignsCriterion extends AbstractCriterion{
     }
 
     public double calculateThresholdValue(double quantile) {
-        long l = NUM_OF_DIFFERENT_BYTES*NUM_OF_DIFFERENT_BYTES;
+        long l = (NUM_OF_DIFFERENT_BYTES-1)*(NUM_OF_DIFFERENT_BYTES-1);
         return Math.sqrt(2*l)*quantile + l;
     }
 
     public boolean test(double quantile) {
-        double threshold = calculateThresholdValue(quantile);
-        //System.out.println(Arrays.toString(randomSequence));
-        //System.out.println(Arrays.toString(statisticData));
-        //System.out.println("Test threashold - " + threshold);
-        return (chiSqr - threshold)<0;
+        return (chiSqr - calculateThresholdValue(quantile))<0;
     }
 
     public double getChiSqr() {
@@ -99,7 +95,6 @@ public class IndependenceSignsCriterion extends AbstractCriterion{
     }
 
     public void printRandomSequence() {
-        /*Stream.of(randomSequence).forEach(System.out::println);*/
         for (int i=0; i<NUM_OF_BYTES; i++) {
             System.out.println(randomSequence[i]);
         }

@@ -1,11 +1,6 @@
 package ua.asymetric.cryptology.random;
 
 public class WolframGenerator extends RandomGenerator {
-    @Override
-    public String getGeneratorName() {
-        return GENERATOR_NAME;
-    }
-
     private static final String GENERATOR_NAME = "Wolfram";
     private int seed;
 
@@ -21,16 +16,8 @@ public class WolframGenerator extends RandomGenerator {
     @Override
     public int generate() {
         int result = seed & 1;
-        //System.out.println(Integer.toBinaryString(result));
         seed = circularLeftShift(seed, 1) ^ (seed | circularRightShift(seed, 1));
         return result;
-    }
-
-    public static void main(String... a) {
-        int q = (int) System.nanoTime();
-        System.out.println(Integer.toBinaryString(q));
-        q = circularRightShift(q, 1);
-        System.out.println(Integer.toBinaryString(q));
     }
 
     @Override
@@ -42,6 +29,11 @@ public class WolframGenerator extends RandomGenerator {
         }
         result |= generate();
         return result;
+    }
+
+    @Override
+    public String getGeneratorName() {
+        return GENERATOR_NAME;
     }
 
     private static int circularLeftShift(int value, int step) {

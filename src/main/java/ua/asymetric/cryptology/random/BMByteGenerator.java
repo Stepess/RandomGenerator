@@ -6,12 +6,6 @@ import java.util.Random;
 public class BMByteGenerator extends BMGenerator {
     private static final String GENERATOR_NAME = "BMByte";
     private static final BigInteger Z = P.subtract(BigInteger.valueOf(1)).divide(BigInteger.valueOf(256));
-
-    @Override
-    public String getGeneratorName() {
-        return GENERATOR_NAME;
-    }
-
     private BigInteger seed;
 
     public BMByteGenerator() {
@@ -43,5 +37,10 @@ public class BMByteGenerator extends BMGenerator {
             }
         }
         return (byte) j;
+    }
+
+    @Override
+    public String getGeneratorName() {
+        return GENERATOR_NAME;
     }
 }

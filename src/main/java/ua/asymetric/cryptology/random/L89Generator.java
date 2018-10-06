@@ -3,11 +3,6 @@ package ua.asymetric.cryptology.random;
 import ua.asymetric.cryptology.LSR;
 
 public class L89Generator extends LGenerator {
-    @Override
-    public String getGeneratorName() {
-        return GENERATOR_NAME;
-    }
-
     private static final String GENERATOR_NAME = "L89";
     private final static int PERIOD = 89;
     private final static int[] RECURRENCE = {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -28,5 +23,10 @@ public class L89Generator extends LGenerator {
         }
         result |= generate();
         return result;
+    }
+
+    @Override
+    public String getGeneratorName() {
+        return GENERATOR_NAME;
     }
 }

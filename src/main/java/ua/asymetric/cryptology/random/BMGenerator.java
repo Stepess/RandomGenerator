@@ -3,7 +3,6 @@ package ua.asymetric.cryptology.random;
 import java.math.BigInteger;
 
 public abstract class BMGenerator extends RandomGenerator {
-
     private static final String P_VALUE = "CEA42B987C44FA642D80AD9F51F10457690DEF10C83D0BC1BCEE12FC3B6093E3";
     protected static final BigInteger P =
             new BigInteger(P_VALUE, 16);

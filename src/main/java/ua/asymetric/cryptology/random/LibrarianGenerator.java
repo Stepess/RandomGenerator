@@ -4,11 +4,6 @@ package ua.asymetric.cryptology.random;
 import java.io.*;
 
 public class LibrarianGenerator extends RandomGenerator {
-    @Override
-    public String getGeneratorName() {
-        return GENERATOR_NAME;
-    }
-
     private static final String GENERATOR_NAME = "Librarian";
     private static final String TEXT_PATH =
             "src\\main\\resource\\lotr.txt";
@@ -59,5 +54,10 @@ public class LibrarianGenerator extends RandomGenerator {
     @Override
     public byte generateRandomByte() {
         return (byte) generate();
+    }
+
+    @Override
+    public String getGeneratorName() {
+        return GENERATOR_NAME;
     }
 }

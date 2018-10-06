@@ -5,11 +5,6 @@ import java.util.Random;
 
 public class BMBitGenerator extends BMGenerator {
     private static final String GENERATOR_NAME = "BMBit";
-    @Override
-    public String getGeneratorName() {
-        return GENERATOR_NAME;
-    }
-
     private BigInteger seed;
 
     public BMBitGenerator() {
@@ -44,5 +39,10 @@ public class BMBitGenerator extends BMGenerator {
         }
         result |= generate();
         return result;
+    }
+
+    @Override
+    public String getGeneratorName() {
+        return GENERATOR_NAME;
     }
 }

@@ -2,8 +2,6 @@ package ua.asymetric.cryptology.test;
 
 import ua.asymetric.cryptology.random.RandomGenerator;
 
-import java.util.Arrays;
-
 public class EquiprobableSignsCriterion extends AbstractCriterion {
 
     private static final int NUM_OF_BYTES = 262_144;
@@ -13,7 +11,7 @@ public class EquiprobableSignsCriterion extends AbstractCriterion {
     private byte[] randomSequence;
     private RandomGenerator generator;
     private double expectedNumberOfByte;
-    private double hiSqr;
+    private double chiSqr;
 
     public EquiprobableSignsCriterion(RandomGenerator generator) {
         this.generator = generator;
@@ -36,7 +34,7 @@ public class EquiprobableSignsCriterion extends AbstractCriterion {
 
     public void calculateChiSqr() {
         for (int i=0; i<NUM_OF_DIFFERENT_BYTES; i++) {
-            hiSqr += Math.pow(statisticData[i] - expectedNumberOfByte, 2)*1.0/expectedNumberOfByte;
+            chiSqr += Math.pow(statisticData[i] - expectedNumberOfByte, 2)*1.0/expectedNumberOfByte;
         }
     }
 
@@ -45,15 +43,11 @@ public class EquiprobableSignsCriterion extends AbstractCriterion {
     }
 
     public boolean test(double quantile) {
-        double threshold = calculateThresholdValue(quantile);
-        //System.out.println(Arrays.toString(randomSequence));
-        //System.out.println(Arrays.toString(statisticData));
-        //System.out.println("Test threashold - " + threshold);
-        return (hiSqr - threshold)<0;
+        return (chiSqr - calculateThresholdValue(quantile))<0;
     }
 
     public double getChiSqr() {
-        return hiSqr;
+        return chiSqr;
     }
 
     public int[] getStatisticData() {

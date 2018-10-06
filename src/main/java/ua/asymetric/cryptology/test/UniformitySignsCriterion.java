@@ -2,10 +2,6 @@ package ua.asymetric.cryptology.test;
 
 import ua.asymetric.cryptology.random.RandomGenerator;
 
-import java.util.Arrays;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 public class UniformitySignsCriterion extends AbstractCriterion{
 
     private static final int NUM_OF_BYTES = 262_144;
@@ -44,22 +40,6 @@ public class UniformitySignsCriterion extends AbstractCriterion{
                 statisticData[j][randomSequence[i]+128]++;
             }
         }
-        /*for (int i=0; i<R; i++) {
-            for (int j=0; j<NUM_OF_DIFFERENT_BYTES; j++) {
-                System.out.print(statisticData[i][j] + " ");
-            }
-            System.out.println();
-        }*/
-        /*System.out.println(Stream.of(statisticData).flatMapToInt(Arrays::stream).sum());*/
-        /*Stream.of(statisticData).forEach(x -> System.out.println(Arrays.stream(x).sum()));*/
-        /*Stream.of(statisticData).forEach(x -> System.out.println(Arrays.toString(x)));*/
-        /*for (int i=0; i<R;i++) {
-            int sum=0;
-            for (int j=0; j<NUM_OF_DIFFERENT_BYTES; j++) {
-                sum+=statisticData[i][j];
-            }
-            System.out.println(sum);
-        }*/
     }
 
 
@@ -67,11 +47,9 @@ public class UniformitySignsCriterion extends AbstractCriterion{
         for (int i = 0; i < R; i++) {
             for (int j = 0; j < NUM_OF_DIFFERENT_BYTES; j++) {
                 int denominator = sumColumn(statisticData, i) *  M;
-                /*System.out.println(chiSqr);*/
                 if (denominator!=0) {
                     chiSqr += statisticData[i][j]*statisticData[i][j]*1.0/(denominator);
                 }
-
             }
         }
         chiSqr--;
@@ -87,17 +65,13 @@ public class UniformitySignsCriterion extends AbstractCriterion{
     }
 
     public double calculateThresholdValue(double quantile) {
-        long l = NUM_OF_DIFFERENT_BYTES*NUM_OF_DIFFERENT_BYTES;
+        long l = (NUM_OF_DIFFERENT_BYTES-1)*(R-1);
         return Math.sqrt(2*l)*quantile + l;
     }
 
 
     public boolean test(double quantile) {
-        double threshold = calculateThresholdValue(quantile);
-        //System.out.println(Arrays.toString(randomSequence));
-        //System.out.println(Arrays.toString(statisticData));
-        //System.out.println("Test threashold - " + threshold);
-        return (chiSqr - threshold)<0;
+        return (chiSqr - calculateThresholdValue(quantile))<0;
     }
 
     public double getChiSqr() {
@@ -114,7 +88,6 @@ public class UniformitySignsCriterion extends AbstractCriterion{
     }
 
     public void printRandomSequence() {
-        /*Stream.of(randomSequence).forEach(System.out::println);*/
         for (int i=0; i<NUM_OF_BYTES; i++) {
             System.out.println(randomSequence[i]);
         }
