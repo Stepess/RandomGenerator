@@ -2,7 +2,7 @@ package ua.asymetric.cryptology.random;
 
 import ua.asymetric.cryptology.LSR;
 
-public class GeffeGenerator implements RandomGenerator {
+public class GeffeGenerator extends RandomGenerator {
     @Override
     public String getGeneratorName() {
         return GENERATOR_NAME;

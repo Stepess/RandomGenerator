@@ -38,7 +38,7 @@ public class UniformitySignsCriterion extends AbstractCriterion{
         }
     }
 
-    public void countStatisticData() {
+    public void countStatisticData(byte[] randomSequence) {
         for (int j=0; j<R; j++) {
             for (int i=M*j; i<M*j + M; i++) {
                 statisticData[j][randomSequence[i]+128]++;

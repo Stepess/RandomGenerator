@@ -31,8 +31,8 @@ public class TestUtil {
 
         EquiprobableSignsCriterion TestEqiprobSigns = new EquiprobableSignsCriterion(generator);
 
-        TestEqiprobSigns.generateRandomSequence();
-        TestEqiprobSigns.countStatisticData();
+/*        TestEqiprobSigns.generateRandomSequence();*/
+        TestEqiprobSigns.countStatisticData(generator.getRandomSequence());
         TestEqiprobSigns.calculateChiSqr();
 
         System.out.println("HiSqr = " + TestEqiprobSigns.getChiSqr());
@@ -94,8 +94,7 @@ public class TestUtil {
     }*/
 
     public static void testCriterion(RandomGenerator generator, AbstractCriterion criterion) {
-        criterion.generateRandomSequence();
-        criterion.countStatisticData();
+        criterion.countStatisticData(generator.getRandomSequence());
         criterion.calculateChiSqr();
 
         double[] thresholdsValues = new double[3];
@@ -117,10 +116,10 @@ public class TestUtil {
         testResults.put(generator.getGeneratorName(), resultsValues);
     }
 
-    public static void printResults() {
+    public static void printResults(String criterionName) {
         double[] criterionPowers = {0.01, 0.05, 0.1};
         System.out.println();
-        System.out.println(StringUtils.leftPad("EqiProbableSignsCriteria", 70));
+        System.out.println(StringUtils.leftPad(criterionName, 70));
         for (int i=0; i<3; i++) {
             System.out.print(StringUtils.leftPad(String.valueOf(criterionPowers[i]), 35));
         }

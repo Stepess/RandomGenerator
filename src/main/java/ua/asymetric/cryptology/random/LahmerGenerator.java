@@ -1,6 +1,6 @@
 package ua.asymetric.cryptology.random;
 
-public abstract class LahmerGenerator implements RandomGenerator {
+public abstract class LahmerGenerator extends RandomGenerator {
     private long m = 4294967296L; //2^32
     private long a = 65537L; //2^16 + 1
     private long c = 119L;

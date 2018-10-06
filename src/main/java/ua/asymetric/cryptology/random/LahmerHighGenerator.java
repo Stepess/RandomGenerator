@@ -1,6 +1,6 @@
 package ua.asymetric.cryptology.random;
 
-public class LahmerHighGenerator extends LahmerGenerator implements RandomGenerator {
+public class LahmerHighGenerator extends LahmerGenerator {
     @Override
     public String getGeneratorName() {
         return GENERATOR_NAME;

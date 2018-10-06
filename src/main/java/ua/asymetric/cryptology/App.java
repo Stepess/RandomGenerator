@@ -10,7 +10,7 @@ public class
 App
 {
 
-
+    private static final int NUM_OF_BYTES = 262_144;
 
 
     public static void main( String[] args )
@@ -101,23 +101,27 @@ App
         generators[8] = new LibrarianGenerator();
         generators[9] = new WolframGenerator();
 
+        for (RandomGenerator generator: generators) {
+            generator.generateRandomSequence(NUM_OF_BYTES);
+        }
+
         for (RandomGenerator generator : generators) {
             TestUtil.testCriterion(generator, new EquiprobableSignsCriterion(generator));
         }
-        TestUtil.printResults();
+        TestUtil.printResults("Equiprobable Signs Criterion");
 
 
         for (RandomGenerator generator : generators) {
             TestUtil.testCriterion(generator, new IndependenceSignsCriterion(generator));
         }
 
-        TestUtil.printResults();
+        TestUtil.printResults("Independence Signs Criterion");
 
         for (RandomGenerator generator : generators) {
             TestUtil.testCriterion(generator, new UniformitySignsCriterion(generator));
         }
 
-        TestUtil.printResults();
+        TestUtil.printResults("Uniformity Signs Criterion");
 
        /* TestUtil.testCriterion(generators[4], new UniformitySignsCriterion(generators[4]));
 

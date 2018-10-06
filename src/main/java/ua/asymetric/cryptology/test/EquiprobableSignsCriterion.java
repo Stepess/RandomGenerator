@@ -28,7 +28,7 @@ public class EquiprobableSignsCriterion extends AbstractCriterion {
         }
     }
 
-    public void countStatisticData() {
+    public void countStatisticData(byte[] randomSequence) {
         for (int i=0; i<NUM_OF_BYTES; i++) {
             statisticData[randomSequence[i]+128]++;
         }

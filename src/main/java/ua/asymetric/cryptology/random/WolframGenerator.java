@@ -1,6 +1,6 @@
 package ua.asymetric.cryptology.random;
 
-public class WolframGenerator implements RandomGenerator {
+public class WolframGenerator extends RandomGenerator {
     @Override
     public String getGeneratorName() {
         return GENERATOR_NAME;

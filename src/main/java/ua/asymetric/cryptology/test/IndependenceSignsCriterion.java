@@ -36,7 +36,7 @@ public class IndependenceSignsCriterion extends AbstractCriterion{
         }
     }
 
-    public void countStatisticData() {
+    public void countStatisticData(byte[] randomSequence) {
         for (int i=0; i<NUM_OF_BYTES/2; i++) {
             statisticData[randomSequence[2*i]+128][randomSequence[2*i+1]+128]++;
         }

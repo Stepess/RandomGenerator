@@ -3,7 +3,7 @@ package ua.asymetric.cryptology.random;
 
 import java.io.*;
 
-public class LibrarianGenerator implements RandomGenerator {
+public class LibrarianGenerator extends RandomGenerator {
     @Override
     public String getGeneratorName() {
         return GENERATOR_NAME;

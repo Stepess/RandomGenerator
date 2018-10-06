@@ -3,7 +3,7 @@ package ua.asymetric.cryptology.test;
 public abstract class AbstractCriterion {
 
     public abstract void generateRandomSequence();
-    public abstract void countStatisticData();
+    public abstract void countStatisticData(byte[] randomSequence);
     public abstract void calculateChiSqr();
 
     public abstract double calculateThresholdValue(double quantile);

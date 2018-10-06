@@ -2,7 +2,7 @@ package ua.asymetric.cryptology.random;
 
 import ua.asymetric.cryptology.LSR;
 
-public class L89Generator extends LGenerator implements RandomGenerator {
+public class L89Generator extends LGenerator {
     @Override
     public String getGeneratorName() {
         return GENERATOR_NAME;

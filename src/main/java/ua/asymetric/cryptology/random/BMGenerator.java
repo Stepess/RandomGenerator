@@ -3,7 +3,7 @@ package ua.asymetric.cryptology.random;
 import java.math.BigInteger;
 import java.util.Random;
 
-public class BMGenerator implements RandomGenerator {
+public class BMGenerator extends RandomGenerator {
     @Override
     public String getGeneratorName() {
         return GENERATOR_NAME;

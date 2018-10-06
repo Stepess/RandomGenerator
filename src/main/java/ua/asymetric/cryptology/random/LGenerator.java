@@ -2,7 +2,7 @@ package ua.asymetric.cryptology.random;
 
 import ua.asymetric.cryptology.LSR;
 
-public abstract class LGenerator implements RandomGenerator {
+public abstract class LGenerator extends RandomGenerator {
     private static final String GENERATOR_NAME = "L";
     private LSR lsr;
 

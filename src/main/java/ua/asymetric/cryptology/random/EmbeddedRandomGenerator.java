@@ -2,7 +2,7 @@ package ua.asymetric.cryptology.random;
 
 import java.util.Random;
 
-public class EmbeddedRandomGenerator implements RandomGenerator {
+public class EmbeddedRandomGenerator extends RandomGenerator {
     @Override
     public String getGeneratorName() {
         return GENERATOR_NAME;
