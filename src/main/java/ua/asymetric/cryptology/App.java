@@ -86,7 +86,7 @@ App
         TestUtil.testEqiprobableSignsCriteria(BBSBitGenerator, "BBS EQIPROBABLE SIGNS TEST");*//*
 */
 
-        int numOfGens = 11;
+        int numOfGens = 12;
         RandomGenerator[] generators = new RandomGenerator[numOfGens];
         generators[0] = new BBSBitGenerator();
         //generators[0] = new GeffeGenerator();
@@ -101,6 +101,7 @@ App
         generators[8] = new LibrarianGenerator();
         generators[9] = new WolframGenerator();
         generators[10] = new BBSByteGenerator();
+        generators[11] = new BBSByteGenerator();
 
         for (RandomGenerator generator: generators) {
             generator.generateRandomSequence(NUM_OF_BYTES);
