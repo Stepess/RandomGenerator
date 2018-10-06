@@ -1,7 +1,9 @@
 package ua.asymetric.cryptology;
 
 import ua.asymetric.cryptology.random.*;
+import ua.asymetric.cryptology.test.EquiprobableSignsCriterion;
 import ua.asymetric.cryptology.test.IndependenceSignsCriterion;
+import ua.asymetric.cryptology.test.UniformitySignsCriterion;
 import ua.asymetric.cryptology.util.TestUtil;
 
 public class
@@ -100,16 +102,26 @@ App
         generators[9] = new WolframGenerator();
 
         for (RandomGenerator generator : generators) {
-            TestUtil.testEqiprobableSignsCriteriaForRandomGenerator(generator);
+            TestUtil.testCriterion(generator, new EquiprobableSignsCriterion(generator));
         }
         TestUtil.printResults();
 
 
         for (RandomGenerator generator : generators) {
-            TestUtil.testIndependenceSignsCriteriaForRandomGenerator(generator);
+            TestUtil.testCriterion(generator, new IndependenceSignsCriterion(generator));
         }
 
         TestUtil.printResults();
+
+        for (RandomGenerator generator : generators) {
+            TestUtil.testCriterion(generator, new UniformitySignsCriterion(generator));
+        }
+
+        TestUtil.printResults();
+
+       /* TestUtil.testCriterion(generators[4], new UniformitySignsCriterion(generators[4]));
+
+        TestUtil.printResults();*/
 
         /*RandomGenerator generator = new LahmerLowGenerator();
 

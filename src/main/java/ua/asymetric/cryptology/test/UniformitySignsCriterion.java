@@ -2,12 +2,11 @@ package ua.asymetric.cryptology.test;
 
 import ua.asymetric.cryptology.random.RandomGenerator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class IndependenceSignsCriterion extends AbstractCriterion{
+public class UniformitySignsCriterion extends AbstractCriterion{
 
     private static final int NUM_OF_BYTES = 262_144;
     private static final int NUM_OF_DIFFERENT_BYTES = 256;
@@ -15,16 +14,19 @@ public class IndependenceSignsCriterion extends AbstractCriterion{
     private int[][] statisticData;
     private byte[] randomSequence;
     private RandomGenerator generator;
+    private static final int R = 32;
+    private static final int M = NUM_OF_BYTES/R;
+    private static final int N = M*R;
 
     private double chiSqr = 0;
 
-    public IndependenceSignsCriterion(RandomGenerator generator) {
+    public UniformitySignsCriterion(RandomGenerator generator) {
         this.generator = generator;
-        this.statisticData = new int[NUM_OF_DIFFERENT_BYTES][NUM_OF_DIFFERENT_BYTES];
+        this.statisticData = new int[R][NUM_OF_DIFFERENT_BYTES];
         this.randomSequence = new byte[NUM_OF_BYTES];
     }
 
-    public IndependenceSignsCriterion(byte[] randomSequence, RandomGenerator generator) {
+    public UniformitySignsCriterion(byte[] randomSequence, RandomGenerator generator) {
         this.randomSequence = randomSequence;
         this.generator = generator;
         this.statisticData = new int[NUM_OF_DIFFERENT_BYTES][NUM_OF_DIFFERENT_BYTES];
@@ -37,36 +39,48 @@ public class IndependenceSignsCriterion extends AbstractCriterion{
     }
 
     public void countStatisticData() {
-        for (int i=0; i<NUM_OF_BYTES/2; i++) {
-            statisticData[randomSequence[2*i]+128][randomSequence[2*i+1]+128]++;
+        for (int j=0; j<R; j++) {
+            for (int i=M*j; i<M*j + M; i++) {
+                statisticData[j][randomSequence[i]+128]++;
+            }
         }
+        /*for (int i=0; i<R; i++) {
+            for (int j=0; j<NUM_OF_DIFFERENT_BYTES; j++) {
+                System.out.print(statisticData[i][j] + " ");
+            }
+            System.out.println();
+        }*/
+        /*System.out.println(Stream.of(statisticData).flatMapToInt(Arrays::stream).sum());*/
+        /*Stream.of(statisticData).forEach(x -> System.out.println(Arrays.stream(x).sum()));*/
+        /*Stream.of(statisticData).forEach(x -> System.out.println(Arrays.toString(x)));*/
+        /*for (int i=0; i<R;i++) {
+            int sum=0;
+            for (int j=0; j<NUM_OF_DIFFERENT_BYTES; j++) {
+                sum+=statisticData[i][j];
+            }
+            System.out.println(sum);
+        }*/
     }
 
+
     public void calculateChiSqr() {
-        for (int i = 0; i < NUM_OF_DIFFERENT_BYTES; i++) {
+        for (int i = 0; i < R; i++) {
             for (int j = 0; j < NUM_OF_DIFFERENT_BYTES; j++) {
-                int denominator = sumLine(statisticData, i) *  sumColumn(statisticData, j);
+                int denominator = sumColumn(statisticData, i) *  M;
+                /*System.out.println(chiSqr);*/
                 if (denominator!=0) {
                     chiSqr += statisticData[i][j]*statisticData[i][j]*1.0/(denominator);
                 }
+
             }
         }
         chiSqr--;
-        chiSqr *= NUM_OF_BYTES/2;
-
-    }
-
-    private int sumLine(int[][] array, int lineIndex) {
-        int result = 0;
-        for (int i=0;i<array[lineIndex].length; i++) {
-            result += array[lineIndex][i];
-        }
-        return result;
+        chiSqr *= N;
     }
 
     private int sumColumn(int[][] array, int columnIndex) {
         int result = 0;
-        for (int i=0;i<array[columnIndex].length; i++) {
+        for (int i=0;i<array.length; i++) {
             result += array[i][columnIndex];
         }
         return result;
@@ -76,6 +90,7 @@ public class IndependenceSignsCriterion extends AbstractCriterion{
         long l = NUM_OF_DIFFERENT_BYTES*NUM_OF_DIFFERENT_BYTES;
         return Math.sqrt(2*l)*quantile + l;
     }
+
 
     public boolean test(double quantile) {
         double threshold = calculateThresholdValue(quantile);

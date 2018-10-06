@@ -4,7 +4,7 @@ import ua.asymetric.cryptology.random.RandomGenerator;
 
 import java.util.Arrays;
 
-public class EquiprobableSignsCriterion {
+public class EquiprobableSignsCriterion extends AbstractCriterion {
 
     private static final int NUM_OF_BYTES = 262_144;
     private static final int NUM_OF_DIFFERENT_BYTES = 256;
@@ -34,7 +34,7 @@ public class EquiprobableSignsCriterion {
         }
     }
 
-    public void calculateHiSqr() {
+    public void calculateChiSqr() {
         for (int i=0; i<NUM_OF_DIFFERENT_BYTES; i++) {
             hiSqr += Math.pow(statisticData[i] - expectedNumberOfByte, 2)*1.0/expectedNumberOfByte;
         }
@@ -52,7 +52,7 @@ public class EquiprobableSignsCriterion {
         return (hiSqr - threshold)<0;
     }
 
-    public double getHiSqr() {
+    public double getChiSqr() {
         return hiSqr;
     }
 
