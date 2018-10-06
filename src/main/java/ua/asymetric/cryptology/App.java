@@ -33,7 +33,7 @@ App
         RandomGenerator generator5 = new WolframGenerator();
         System.out.println(generator5.generate());
 
-        RandomGenerator generator6 = new BMGenerator();
+        RandomGenerator generator6 = new BMBitGenerator();
         System.out.println(generator6.generate());
 
         RandomGenerator generator7 = new LibrarianGenerator();
@@ -76,22 +76,22 @@ App
         RandomGenerator WolframGenerator = new WolframGenerator();
         TestUtil.testEqiprobableSignsCriteria(WolframGenerator, "WOLFRAM EQIPROBABLE SIGNS TEST");
 
-        *//*RandomGenerator BMGenerator = new BMGenerator();
-        TestUtil.testEqiprobableSignsCriteria(BMGenerator, "BM EQIPROBABLE SIGNS TEST");*//*
+        *//*RandomGenerator BMBitGenerator = new BMBitGenerator();
+        TestUtil.testEqiprobableSignsCriteria(BMBitGenerator, "BM EQIPROBABLE SIGNS TEST");*//*
 
         RandomGenerator LibrarianGenerator = new LibrarianGenerator();
         TestUtil.testEqiprobableSignsCriteria(LibrarianGenerator, "Librarian EQIPROBABLE SIGNS TEST");
 
-        *//*RandomGenerator BBSGenerator = new BBSGenerator();
-        TestUtil.testEqiprobableSignsCriteria(BBSGenerator, "BBS EQIPROBABLE SIGNS TEST");*//*
+        *//*RandomGenerator BBSBitGenerator = new BBSBitGenerator();
+        TestUtil.testEqiprobableSignsCriteria(BBSBitGenerator, "BBS EQIPROBABLE SIGNS TEST");*//*
 */
 
-        int numOfGens = 10;
+        int numOfGens = 11;
         RandomGenerator[] generators = new RandomGenerator[numOfGens];
-        //generators[0] = new BBSGenerator();
-        generators[0] = new GeffeGenerator();
-        //generators[1] = new BMGenerator();
-        generators[1] = new GeffeGenerator();
+        generators[0] = new BBSBitGenerator();
+        //generators[0] = new GeffeGenerator();
+        generators[1] = new BMBitGenerator();
+        //generators[1] = new GeffeGenerator();
         generators[2] = new EmbeddedRandomGenerator();
         generators[3] = new GeffeGenerator();
         generators[4] = new L20Generator();
@@ -100,6 +100,7 @@ App
         generators[7] = new LahmerLowGenerator();
         generators[8] = new LibrarianGenerator();
         generators[9] = new WolframGenerator();
+        generators[10] = new BBSByteGenerator();
 
         for (RandomGenerator generator: generators) {
             generator.generateRandomSequence(NUM_OF_BYTES);
