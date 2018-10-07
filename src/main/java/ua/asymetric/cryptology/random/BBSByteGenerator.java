@@ -23,6 +23,11 @@ public class BBSByteGenerator extends BBSGenerator {
     }
 
     @Override
+    public BigInteger getSeed() {
+        return seed;
+    }
+
+    @Override
     public String getGeneratorName() {
         return GENERATOR_NAME;
     }

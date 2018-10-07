@@ -5,9 +5,11 @@ import java.util.Random;
 public class EmbeddedRandomGenerator extends RandomGenerator {
     private static final String GENERATOR_NAME = "Java";
     private Random random;
+    private long seed;
 
     public EmbeddedRandomGenerator() {
-        this.random = new Random();
+        seed = System.nanoTime();
+        this.random = new Random(seed);
     }
 
     @Override
@@ -27,5 +29,10 @@ public class EmbeddedRandomGenerator extends RandomGenerator {
     @Override
     public String getGeneratorName() {
         return GENERATOR_NAME;
+    }
+
+    @Override
+    public Object getSeed() {
+        return Long.valueOf(seed);
     }
 }

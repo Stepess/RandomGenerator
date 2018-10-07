@@ -40,6 +40,11 @@ public class BMByteGenerator extends BMGenerator {
     }
 
     @Override
+    public BigInteger getSeed() {
+        return seed;
+    }
+
+    @Override
     public String getGeneratorName() {
         return GENERATOR_NAME;
     }

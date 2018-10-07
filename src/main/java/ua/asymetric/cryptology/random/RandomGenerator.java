@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Optional;
 
 public abstract class RandomGenerator {
 
@@ -37,12 +38,15 @@ public abstract class RandomGenerator {
         return elapsedTime;
     }
 
+    public abstract Object getSeed();
+
     public void writeRandomSequenceAndTimeInFile(String filePath) {
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
-            /*for (int el: randomSequence) {
-                bw.write(el);
-            }*/
-            bw.write(Arrays.toString(randomSequence).replaceAll("[,\\s\\[\\]]*",""));
+            bw.write("Seed: " +  getSeed());
+            bw.write("\r\n");
+            for (byte b: randomSequence) {
+                bw.write(Integer.toBinaryString(b));
+            }
             bw.write("\r\n");
             bw.write("Elapsed time: " + elapsedTime);
         } catch (IOException e) {

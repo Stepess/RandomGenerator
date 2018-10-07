@@ -18,6 +18,11 @@ public class BBSBitGenerator extends BBSGenerator {
     }
 
     @Override
+    public BigInteger getSeed() {
+        return seed;
+    }
+
+    @Override
     public byte generateRandomByte() {
         byte result = 0;
         for (int i = 0; i < Byte.SIZE - 1; i++) {

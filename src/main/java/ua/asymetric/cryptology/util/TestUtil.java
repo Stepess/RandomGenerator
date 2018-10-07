@@ -4,6 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 import ua.asymetric.cryptology.random.RandomGenerator;
 import ua.asymetric.cryptology.test.AbstractCriterion;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,6 +63,29 @@ public class TestUtil {
                         thresholds.get(name)[i], chiSquares.get(name));
             }
             System.out.println();
+        }
+    }
+
+    public static void printResultsToFile(String filePath, String criterionName) {
+        double[] criterionPowers = {0.01, 0.05, 0.1};
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath+criterionName + ".txt"))) {
+            bw.write("\r\n");
+            bw.write(StringUtils.leftPad(criterionName, 70));
+            bw.write("\r\n");
+            for (int i=0; i<3; i++) {
+                bw.write(StringUtils.leftPad(String.valueOf(criterionPowers[i]), 35));
+            }
+            bw.write("\r\n");
+            for (String name: thresholds.keySet()) {
+                bw.write(String.format("|%10s", name));
+                for (int i=0; i<3; i++) {
+                    bw.write(String.format("|%5s\t(%-12.2f , %-12.2f)",StringUtils.leftPad(String.valueOf(testResults.get(name)[i] ),5),
+                            thresholds.get(name)[i], chiSquares.get(name)));
+                }
+                bw.write("\r\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

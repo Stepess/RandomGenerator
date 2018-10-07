@@ -5,6 +5,7 @@ import ua.asymetric.cryptology.LSR;
 public abstract class LGenerator extends RandomGenerator {
     private static final String GENERATOR_NAME = "L";
     private LSR lsr;
+    private long seed;
 
     LGenerator(LSR lsr) {
         this.lsr = lsr;
@@ -12,7 +13,13 @@ public abstract class LGenerator extends RandomGenerator {
 
     @Override
     public void updateState() {
-        lsr.setCondition(System.nanoTime());
+        seed = System.nanoTime();
+        lsr.setCondition(seed);
+    }
+
+    @Override
+    public Object getSeed() {
+        return Long.valueOf(seed);
     }
 
     @Override

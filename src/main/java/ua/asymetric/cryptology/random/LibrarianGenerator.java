@@ -60,4 +60,9 @@ public class LibrarianGenerator extends RandomGenerator {
     public String getGeneratorName() {
         return GENERATOR_NAME;
     }
+
+    @Override
+    public Object getSeed() {
+        return null;
+    }
 }

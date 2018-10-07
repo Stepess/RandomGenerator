@@ -36,6 +36,11 @@ public class WolframGenerator extends RandomGenerator {
         return GENERATOR_NAME;
     }
 
+    @Override
+    public Object getSeed() {
+        return Integer.valueOf(seed);
+    }
+
     private static int circularLeftShift(int value, int step) {
         return (value << step) | (value >>> (Integer.SIZE - step));
     }

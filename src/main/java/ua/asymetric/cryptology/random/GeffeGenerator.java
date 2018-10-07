@@ -51,4 +51,9 @@ public class GeffeGenerator extends RandomGenerator {
     public String getGeneratorName() {
         return GENERATOR_NAME;
     }
+
+    @Override
+    public Object getSeed() {
+        return null;
+    }
 }

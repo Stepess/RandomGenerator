@@ -20,7 +20,7 @@ public abstract class LahmerGenerator extends RandomGenerator {
         return seed;
     }
 
-    public long getSeed() {
-        return seed;
+    public Object getSeed() {
+        return Long.valueOf(seed);
     }
 }
