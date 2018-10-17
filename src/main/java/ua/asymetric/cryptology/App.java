@@ -17,6 +17,8 @@ public class App
 
     public static void main( String[] args )
     {
+        long startTime = System.currentTimeMillis();
+
         RandomGenerator[] generators = new RandomGenerator[NUM_OF_GENS];
         generators[0] = new BBSBitGenerator();
         generators[1] = new EmbeddedRandomGenerator();
@@ -34,6 +36,9 @@ public class App
         for (RandomGenerator generator: generators) {
             generator.generateRandomSequence(NUM_OF_BYTES);
         }
+
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        System.out.println("Elapsed time: " + elapsedTime);
 
         for (RandomGenerator generator: generators) {
             generator.writeRandomSequenceAndTimeInFile("src/statistics/" + generator.getGeneratorName() + ".txt");
