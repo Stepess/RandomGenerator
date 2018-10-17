@@ -6,6 +6,11 @@ import ua.asymetric.cryptology.test.IndependenceSignsCriterion;
 import ua.asymetric.cryptology.test.UniformitySignsCriterion;
 import ua.asymetric.cryptology.util.TestUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class App
 {
     private static final int NUM_OF_BYTES = 262_144;
@@ -17,6 +22,9 @@ public class App
 
     public static void main( String[] args )
     {
+        ExecutorService executer = Executors.newFixedThreadPool(Math.max(1, Runtime
+                .getRuntime().availableProcessors() - 1)); //add thread factory
+
         RandomGenerator[] generators = new RandomGenerator[NUM_OF_GENS];
         generators[0] = new BBSBitGenerator();
         generators[1] = new EmbeddedRandomGenerator();
@@ -30,6 +38,17 @@ public class App
         generators[9] = new BBSByteGenerator();
         generators[10] = new BMBitGenerator();
         generators[11] = new BMByteGenerator();
+
+        List<Runnable> runnables = new ArrayList<>(NUM_OF_GENS);
+
+        for (RandomGenerator generator: generators) {
+            runnables.add( new Runnable() {
+                @Override
+                public void run() {
+                    generator.generate();
+                }
+            });
+        }
 
         for (RandomGenerator generator: generators) {
             generator.generateRandomSequence(NUM_OF_BYTES);
@@ -60,5 +79,3 @@ public class App
 
     }
 }
-
-
