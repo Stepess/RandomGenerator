@@ -7,16 +7,15 @@ import ua.asymetric.cryptology.test.UniformitySignsCriterion;
 import ua.asymetric.cryptology.util.TestUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 public class App
 {
     private static final int NUM_OF_BYTES = 262_144;
-    private static final int NUM_OF_GENS = 10;
+    private static final int NUM_OF_GENS = 12;
     private static final String TEST_1 = "Equiprobable Signs Criterion";
     private static final String TEST_2 = "Independence Signs Criterion";
     private static final String TEST_3 = "Uniformity Signs Criterion";
@@ -25,8 +24,6 @@ public class App
     public static void main( String[] args )
     {
         long startTime = System.currentTimeMillis();
-
-        CountDownLatch latch = new CountDownLatch(NUM_OF_GENS);
 
         RandomGenerator[] generators = new RandomGenerator[NUM_OF_GENS];
         generators[0] = new BBSBitGenerator();
@@ -39,47 +36,30 @@ public class App
         generators[7] = new LibrarianGenerator();
         generators[8] = new WolframGenerator();
         generators[9] = new BBSByteGenerator();
-        //generators[10] = new BMBitGenerator();
-        //generators[11] = new BMByteGenerator();
+        generators[10] = new BMBitGenerator();
+        generators[11] = new BMByteGenerator();
 
-        List<Runnable> runnables = new ArrayList<>(NUM_OF_GENS);
-
-        for (RandomGenerator generator: generators) {
-            runnables.add( new Runnable() {
-                @Override
-                public void run() {
-                    generator.generate();
-                    latch.countDown();
-                }
-            });
-        }
+        List<Runnable> runnables = Arrays.stream(generators)
+                .map(generator -> (Runnable) () -> generator.generateRandomSequence(NUM_OF_BYTES))
+                .collect(Collectors.toList());
 
         ExecutorService executer = Executors.newFixedThreadPool(Math.max(1, Runtime
-                .getRuntime().availableProcessors() - 1), new ThreadFactory() {
-            @Override
-            public Thread newThread(Runnable r) {
-                return new Thread(r);
-            }
-        });
+                .getRuntime().availableProcessors() - 1), Thread::new);
 
         for (Runnable task: runnables) {
             executer.execute(task);
         }
 
+        executer.shutdown();
+
         try {
-            latch.await();
+            executer.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        executer.shutdown();
-
         long elapsedTime = System.currentTimeMillis() - startTime;
         System.out.println("Elapsed time: " + elapsedTime);
-
-        for (RandomGenerator generator: generators) {
-            generator.generateRandomSequence(NUM_OF_BYTES);
-        }
 
         for (RandomGenerator generator: generators) {
             generator.writeRandomSequenceAndTimeInFile("src/statistics/" + generator.getGeneratorName() + ".txt");
