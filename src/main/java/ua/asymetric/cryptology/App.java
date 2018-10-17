@@ -8,6 +8,7 @@ import ua.asymetric.cryptology.util.TestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -23,8 +24,9 @@ public class App
 
     public static void main( String[] args )
     {
-
         long startTime = System.currentTimeMillis();
+
+        CountDownLatch latch = new CountDownLatch(NUM_OF_GENS);
 
         RandomGenerator[] generators = new RandomGenerator[NUM_OF_GENS];
         generators[0] = new BBSBitGenerator();
@@ -47,6 +49,7 @@ public class App
                 @Override
                 public void run() {
                     generator.generate();
+                    latch.countDown();
                 }
             });
         }
@@ -63,9 +66,16 @@ public class App
             executer.execute(task);
         }
 
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        executer.shutdown();
+
         long elapsedTime = System.currentTimeMillis() - startTime;
         System.out.println("Elapsed time: " + elapsedTime);
-
 
         for (RandomGenerator generator: generators) {
             generator.generateRandomSequence(NUM_OF_BYTES);
