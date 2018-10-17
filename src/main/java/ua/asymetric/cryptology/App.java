@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 public class App
 {
     private static final int NUM_OF_BYTES = 262_144;
-    private static final int NUM_OF_GENS = 12;
+    private static final int NUM_OF_GENS = 10;
     private static final String TEST_1 = "Equiprobable Signs Criterion";
     private static final String TEST_2 = "Independence Signs Criterion";
     private static final String TEST_3 = "Uniformity Signs Criterion";
@@ -22,8 +23,6 @@ public class App
 
     public static void main( String[] args )
     {
-        ExecutorService executer = Executors.newFixedThreadPool(Math.max(1, Runtime
-                .getRuntime().availableProcessors() - 1)); //add thread factory
 
         RandomGenerator[] generators = new RandomGenerator[NUM_OF_GENS];
         generators[0] = new BBSBitGenerator();
@@ -36,8 +35,8 @@ public class App
         generators[7] = new LibrarianGenerator();
         generators[8] = new WolframGenerator();
         generators[9] = new BBSByteGenerator();
-        generators[10] = new BMBitGenerator();
-        generators[11] = new BMByteGenerator();
+        //generators[10] = new BMBitGenerator();
+        //generators[11] = new BMByteGenerator();
 
         List<Runnable> runnables = new ArrayList<>(NUM_OF_GENS);
 
@@ -49,6 +48,21 @@ public class App
                 }
             });
         }
+
+        ExecutorService executer = Executors.newFixedThreadPool(Math.max(1, Runtime
+                .getRuntime().availableProcessors() - 1), new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable r) {
+                return new Thread(r);
+            }
+        });
+
+        for (Runnable task: runnables) {
+            executer.execute(task);
+        }
+
+
+
 
         for (RandomGenerator generator: generators) {
             generator.generateRandomSequence(NUM_OF_BYTES);
