@@ -43,8 +43,7 @@ public class App
                 .map(generator -> (Runnable) () -> generator.generateRandomSequence(NUM_OF_BYTES))
                 .collect(Collectors.toList());
 
-        ExecutorService executer = Executors.newFixedThreadPool(Math.max(1, Runtime
-                .getRuntime().availableProcessors() - 1), Thread::new);
+        ExecutorService executer = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), Thread::new);
 
         for (Runnable task: runnables) {
             executer.execute(task);
