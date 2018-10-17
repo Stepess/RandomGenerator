@@ -6,6 +6,12 @@ import ua.asymetric.cryptology.test.IndependenceSignsCriterion;
 import ua.asymetric.cryptology.test.UniformitySignsCriterion;
 import ua.asymetric.cryptology.util.TestUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
+
 public class App
 {
     private static final int NUM_OF_BYTES = 262_144;
@@ -33,8 +39,22 @@ public class App
         generators[10] = new BMBitGenerator();
         generators[11] = new BMByteGenerator();
 
-        for (RandomGenerator generator: generators) {
-            generator.generateRandomSequence(NUM_OF_BYTES);
+        List<Runnable> runnables = Arrays.stream(generators)
+                .map(generator -> (Runnable) () -> generator.generateRandomSequence(NUM_OF_BYTES))
+                .collect(Collectors.toList());
+
+        ExecutorService executer = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), Thread::new);
+
+        for (Runnable task: runnables) {
+            executer.execute(task);
+        }
+
+        executer.shutdown();
+
+        try {
+            executer.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         long elapsedTime = System.currentTimeMillis() - startTime;
@@ -65,5 +85,3 @@ public class App
 
     }
 }
-
-
