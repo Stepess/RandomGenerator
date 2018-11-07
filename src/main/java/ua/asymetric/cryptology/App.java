@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-public class App
-{
+public class App {
     private static final int NUM_OF_BYTES = 262_144;
     private static final int NUM_OF_GENS = 12;
     private static final String TEST_1 = "Equiprobable Signs Criterion";
@@ -21,8 +20,7 @@ public class App
     private static final String TEST_3 = "Uniformity Signs Criterion";
     private static final String TEST_RESULTS_PATH = "src\\statistics\\";
 
-    public static void main( String[] args )
-    {
+    public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
 
         RandomGenerator[] generators = new RandomGenerator[NUM_OF_GENS];
@@ -45,7 +43,7 @@ public class App
 
         ExecutorService executer = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(), Thread::new);
 
-        for (Runnable task: runnables) {
+        for (Runnable task : runnables) {
             executer.execute(task);
         }
 
@@ -60,7 +58,7 @@ public class App
         long elapsedTime = System.currentTimeMillis() - startTime;
         System.out.println("Elapsed time: " + elapsedTime);
 
-        for (RandomGenerator generator: generators) {
+        for (RandomGenerator generator : generators) {
             generator.writeRandomSequenceAndTimeInFile("src/statistics/" + generator.getGeneratorName() + ".txt");
         }
 
@@ -69,7 +67,6 @@ public class App
         }
         TestUtil.printResults(TEST_1);
         TestUtil.printResultsToFile(TEST_RESULTS_PATH, TEST_1);
-
 
         for (RandomGenerator generator : generators) {
             TestUtil.testCriterion(generator, new IndependenceSignsCriterion(generator));

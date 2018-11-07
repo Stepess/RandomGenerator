@@ -6,7 +6,7 @@ import java.io.*;
 public class LibrarianGenerator extends RandomGenerator {
     private static final String GENERATOR_NAME = "Librarian";
     private static final String TEXT_PATH =
-            "src\\main\\resource\\lotr.txt";
+            "src\\main\\resource\\hp.txt";
     private InputStream stream;
     private File source;
 
